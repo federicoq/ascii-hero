@@ -9,7 +9,7 @@ class Area implements \AsciiHero\AreaInterface {
 	private $align = STR_PAD_BOTH;
 	private $zIndex = 0;
 
-	function __construct(int $w = 100, int $h = 100, int $x = 0, int $y = 0) {
+	function __construct(int $w = 0, int $h = 100, int $x = 0, int $y = 0) {
 
 		$this->setWidth($w);
 		$this->setHeight($h);
@@ -174,7 +174,7 @@ class Area implements \AsciiHero\AreaInterface {
 		foreach($this->elements as $k => $element) {
 
 			if(!empty($element->inherit_width)) {
-				$element->setWidth($this->w + mb_strlen($pre) + mb_strlen($post));
+				$element->setWidth($this->w + $this->padding['left'] + $this->padding['right']);
 			}
 
 			$relative_render = $element->render();
