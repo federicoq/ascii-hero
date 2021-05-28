@@ -6,7 +6,8 @@ use \AsciiHero\Tools;
 
 class Text implements \AsciiHero\AreaInterface {
 
-	private $w = false;
+	use \AsciiHero\TraitDimensions;
+	
 	private $align = STR_PAD_RIGHT;
 	private $splitting = true;
 	private $ignore_padding = false;
@@ -14,10 +15,13 @@ class Text implements \AsciiHero\AreaInterface {
 	private $text;
 	private $row_processed;
 
-	function __construct(string $text, int $w = 60, $align = STR_PAD_RIGHT, bool $splitting = true) {
+	function __construct(string $text, int $w = NULL, $align = STR_PAD_RIGHT, bool $splitting = true) {
 
 		$this->setText($text);
 		$this->setAlign($align);
+		if($w == false)
+			$w = mb_strlen($text);
+
 		$this->setWidth($w);
 		$this->setSplitting($splitting);
 
@@ -67,10 +71,6 @@ class Text implements \AsciiHero\AreaInterface {
 
 	public function setSplitting(bool $splitting) {
 		$this->splitting = $splitting;
-	}
-
-	public function setWidth(int $width) {
-		$this->w = $width;
 	}
 
 	public function setAlign($align) {

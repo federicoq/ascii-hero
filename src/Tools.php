@@ -100,6 +100,14 @@ class Tools {
 
 	}
 
+	static function pad_array($array, $pad_len, $pad_str = ' ', $dir = STR_PAD_RIGHT) {
+
+		return array_map(function($item) use ($pad_len, $pad_str, $dir) {
+			return self::pad($item, $pad_len, $pad_str, $dir);
+		}, $array);
+
+	}
+
 	static function pad($str, $pad_len, $pad_str = ' ', $dir = STR_PAD_RIGHT) {
 		
 		$str_len = mb_strlen($str);

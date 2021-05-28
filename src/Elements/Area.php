@@ -6,8 +6,9 @@ use \AsciiHero\Tools;
 
 class Area implements \AsciiHero\AreaInterface {
 
+	use \AsciiHero\TraitDimensions;
+
 	private $align = STR_PAD_BOTH;
-	private $zIndex = 0;
 
 	function __construct(int $w = 0, int $h = 100, int $x = 0, int $y = 0) {
 
@@ -29,52 +30,27 @@ class Area implements \AsciiHero\AreaInterface {
 		return false;
 	}
 
-	# dimensions
-	private $w = 0;
-	private $h = 0;
-
 	public function calculate_size() {
 
 		$h = 0;
 		$w = 0;
 
-		foreach($this->elements as $element) {
+		$widths = array_map(function($a) {
+			return empty($a->inherit_width) ? $a->bounding_box() : false;
+		}, $this->elements);
 
-			if(!empty($element->inherit_width)) {
-				$element->setWidth($this->w + $this->padding['left'] + $this->padding['right']);
-			}
+		$all_w = array_column($widths, 'w');
 
-			$meta = $element->bounding_box();
+		if(!empty($all_w))
+			$w = max($all_w);
 
-			if($meta['w'] > $w)
-				$w = $meta['w'];
-
-			$h += $meta['h'];
-
-		}
-
-		if($w)
+		$h = array_sum(array_column($widths, 'h'));
+		
+		if($w && $w > $this->w)
 			$this->w = $w;
 		$this->h = $h;
-
 		return true;
 
-	}
-
-	public function setWidth(int $width) {
-		$this->w = $width;
-	}
-
-	public function setHeight(int $height) {
-		$this->h = $height;
-	}
-
-	public function width() {
-		return $this->w;
-	}
-
-	public function height() {
-		return $this->h;
 	}
 
 	public function bounding_box() {
@@ -108,7 +84,7 @@ class Area implements \AsciiHero\AreaInterface {
 	];
 
 	public function padding($top, $right, $bottom, $left) {
-		$this->padding = compact('top', 'left', 'right', 'bottom');
+		$this->padding = compact('top', 'right', 'bottom', 'left');
 	}
 
 	public function no_padding() {
@@ -169,7 +145,9 @@ class Area implements \AsciiHero\AreaInterface {
 
 		$queue = [];
 		for($i = 0; $i < $this->padding['top']; $i++)
-			$queue[] = $pre . Tools::pad(' ', $this->w, ' ', $this->align) . $post;
+			$queue[] = $pre . Tools::pad('', $this->w, ' ', $this->align) . $post;
+
+		$this->calculate_size();
 
 		foreach($this->elements as $k => $element) {
 
@@ -195,7 +173,7 @@ class Area implements \AsciiHero\AreaInterface {
 				for($i = 0; $i < $this->spacing; $i++)
 					$fixed_row[] = "";
 			}
-
+			//$queue[] = $relative_render;
 			$queue[] = implode("\n", $fixed_row);
 
 		}

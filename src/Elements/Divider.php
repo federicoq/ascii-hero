@@ -7,10 +7,10 @@ use \AsciiHero\Tools;
 class Divider implements \AsciiHero\AreaInterface {
 
 	use \AsciiHero\TraitFlexWidth;
+	use \AsciiHero\TraitDimensions;
 
 	private $base = false;
 	private $padder = false;
-	private $w = false;
 
 	private $top = false;
 	private $bottom = false;
@@ -31,14 +31,6 @@ class Divider implements \AsciiHero\AreaInterface {
 
 		return implode("\n", $out);
 
-	}
-
-	public function setWidth($val) {
-		$this->w = $val;
-	}
-
-	public function width() {
-		return $this->w;
 	}
 
 	public function bounding_box() {

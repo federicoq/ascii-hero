@@ -12,11 +12,11 @@ class Layout implements \AsciiHero\AreaInterface {
 
 			$buffer = [];
 
-			$max_h = max(array_map(function($i) { return count(explode("\n", $i)); }, $row));
+			$max_h = max(array_map(function($i) { return count(explode("\n", $i->render())); }, $row));
 
 			foreach($row as $col => $single_column) {
 
-				$lines = explode("\n", $single_column);
+				$lines = explode("\n", $single_column->render());
 
 				foreach($lines as $k => $line) {
 
