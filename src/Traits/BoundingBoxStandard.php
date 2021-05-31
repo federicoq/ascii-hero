@@ -1,8 +1,8 @@
 <?php
 
-namespace AsciiHero;
+namespace AsciiHero\Traits;
 
-trait TraitBoundingBoxStandard {
+trait BoundingBoxStandard {
 
 	public function bounding_box() {
 

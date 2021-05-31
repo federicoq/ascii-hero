@@ -1,8 +1,8 @@
 <?php
 
-namespace AsciiHero;
+namespace AsciiHero\Traits;
 
-trait TraitFlexWidth {
+trait FlexWidth {
 
 	/**
 	 * [$inherit_width description]

@@ -6,7 +6,7 @@ use \AsciiHero\Tools;
 
 class Table implements \AsciiHero\AreaInterface {
 
-	use \AsciiHero\TraitDimensions;
+	use \AsciiHero\Traits\Dimensions;
 	
 	private $align = STR_PAD_RIGHT;
 	private $splitting = true;

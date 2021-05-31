@@ -8,7 +8,7 @@ define('EQUALIZE_BOTH', 3);
 
 include __DIR__ . '/vendor/autoload.php';
 
-if(false) {
+if(true) {
 	
 	$textBlock_1 = new AsciiHero\Elements\Text($examples['long_text'], 45, STR_PAD_BOTH, true);
 	$textBlock_2 = new AsciiHero\Elements\Text($examples['text'], 50, STR_PAD_LEFT, true);
@@ -35,11 +35,11 @@ if(false) {
 
 	$layout->row([ $area_1, $area_2 ]);
 
-	$render = $layout->render();
+	$render["Example 1"] = $layout->render();
 
 }
 
-if(false) {
+if(true) {
 
 	$textBlock_1 = new AsciiHero\Elements\Text($examples['long_text'], 50, STR_PAD_LEFT, true);
 	$textBlock_1_1 = new AsciiHero\Elements\Text($examples['long_text'], 50, STR_PAD_LEFT, true);
@@ -53,7 +53,7 @@ if(false) {
 	$area_1->padding(1,1,1,1);
 	$area_1->no_decoration();
 	$area_1->append($textBlock_1);
-	$area_1->append(new \AsciiHero\Elements\Divider('*-', false, 2));
+	$area_1->append(new \AsciiHero\Elements\Divider('─', false, 2));
 	$area_1->append($textBlock_1_1);
 	$area_1->calculate_size();
 
@@ -94,11 +94,11 @@ if(false) {
 	$area_4->append($layout);
 	$area_4->calculate_size();
 
-	$render = $area_4->render();
+	$render["Example 2"] = $area_4->render();
 
 }
 
-if(false) {
+if(true) {
 
 	$table_data = [
 		[ 'sku' => 'AA001', 'name' => 'Computer', 'price' => 4000, 'qty' => 1, 'amount' => rand() ],
@@ -116,8 +116,11 @@ if(false) {
 	$area_4->padding(0, 0, 0, 0);
 	$area_4->append($table);
 	$area_4->append($text);
-	$area_4->append(new AsciiHero\Elements\Divider('*-'));
+	$area_4->append(new AsciiHero\Elements\Divider('─'));
 	$area_4->append($text2);
+	$area_4->append(new AsciiHero\Elements\Divider('─'));
+	$area_4->append($text2);
+	$area_4->setIntersect(true);
 	$area_4->calculate_size();
 
 	$textBlock_3 = new AsciiHero\Elements\Text($examples['long_text'], 35, STR_PAD_RIGHT, true);
@@ -135,11 +138,11 @@ if(false) {
 	$area3 = new AsciiHero\Elements\Area();
 	$area3->append($layout);
 
-	$render = $area3->render();
+	$render["Example 3"] = $area3->render();
 
 }
 
-if(false) {
+if(true) {
 
 	/* Stack */
 
@@ -160,12 +163,12 @@ if(false) {
 	$area = new AsciiHero\Elements\Area();
 	$area->append($stack);
 
-	$render = $area->render();
+	$render["Example 4"] = $area->render();
 
 
 }
 
-if(false) {
+if(true) {
 
 	$plain_1 = new \AsciiHero\Elements\Plain(file_get_contents(__DIR__ . '/examples/art2.txt'));
 	$plain_2 = new \AsciiHero\Elements\Plain(file_get_contents(__DIR__ . '/examples/art1.txt'));
@@ -194,13 +197,11 @@ if(false) {
 	$layout->equalize(EQUALIZE_BOTH);
 	$layout->row( [ $area, $area_2 ] );
 
-	$render = $layout->render();
+	$render["Example 5"] = $layout->render();
 
 }
 
 if(true) {
-
-	$render = '';
 
 	$rectangle_1 = new \AsciiHero\Elements\Rectangle(10,5);
 	$rectangle_2 = new \AsciiHero\Elements\Rectangle(20,5);
@@ -215,12 +216,15 @@ if(true) {
 
 	$text_shape = new \AsciiHero\Elements\TextShape($examples['long_text'], $plain_2, '#', true);
 
-	$render = $text_shape->render();
+	$render["Example 6"] = $text_shape->render();
 
 }
 
-//header('Content-type: text/plain');
-echo $render;
-echo "\n\n";
+foreach($render as $name => $content) {
 
-die();
+	echo $name . "\n";
+	echo $content;
+
+	echo "\n\n";
+
+}

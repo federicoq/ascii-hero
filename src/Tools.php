@@ -4,7 +4,7 @@ namespace AsciiHero;
 
 class Tools {
 
-	static function decoration($string, $decoration = []) {
+	static function decoration($string, $decoration = [], $auto_intersect = false) {
 
 		$lines = explode("\n", $string);
 		$lines_length = max(array_map(function($i) {
@@ -33,8 +33,23 @@ class Tools {
 		$r = $decoration['right'] ?: ( $head || $bot ? ' ' : '' );
 
 		// Fix the lines! :)
-		$fixed_lines = implode("\n", array_map(function($line) use ($l, $r, $lines_length) {
+		$fixed_lines = implode("\n", array_map(function($line) use ($l, $r, $lines_length, $decoration, $auto_intersect) {
+
+			if($auto_intersect) {
+				
+				$first_char = mb_substr($line, 0, 1);
+				$last_char = mb_substr($line, mb_strlen($line) - 1, 1);
+
+				if($first_char == $last_char && ( $last_char == $decoration['top'] || $last_char == $decoration['bottom'] )) {
+					$l = $decoration['joinleft'];
+					$r = $decoration['joinright'];
+				}
+
+			}
+
+
 			return $l . self::pad($line, $lines_length, ' ') . $r;
+
 		}, $lines));
 
 		// Create the heading & Footer

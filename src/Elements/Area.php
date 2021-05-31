@@ -6,7 +6,7 @@ use \AsciiHero\Tools;
 
 class Area implements \AsciiHero\AreaInterface {
 
-	use \AsciiHero\TraitDimensions;
+	use \AsciiHero\Traits\Dimensions;
 
 	private $align = STR_PAD_BOTH;
 
@@ -106,8 +106,15 @@ class Area implements \AsciiHero\AreaInterface {
 		'topleft' => '┌',
 		'topright' => '┐',
 		'bottomleft' => '└',
-		'bottomright' => '┘'
+		'bottomright' => '┘',
+		'joinleft' => '├',
+		'joinright' => '┤'
 	];
+
+	private $tryIntersect = false;
+	public function setIntersect($v) {
+		$this->tryIntersect = $v;
+	}
 
 	public function has_decoration() {
 		return !empty(array_values(array_filter($this->decoration)));
@@ -187,7 +194,7 @@ class Area implements \AsciiHero\AreaInterface {
 		if(!$this->has_decoration())
 			return $body;
 		else {
-			return Tools::decoration($body, $this->decoration);
+			return Tools::decoration($body, $this->decoration, $this->tryIntersect);
 		}
 
 	}

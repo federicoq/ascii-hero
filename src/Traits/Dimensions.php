@@ -1,8 +1,8 @@
 <?php
 
-namespace AsciiHero;
+namespace AsciiHero\Traits;
 
-trait TraitDimensions {
+trait Dimensions {
 
 	# dimensions
 	private $w = 0;

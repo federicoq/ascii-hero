@@ -6,8 +6,8 @@ use \AsciiHero\Tools;
 
 class Rectangle implements \AsciiHero\AreaInterface {
 
-	use \AsciiHero\TraitDimensions;
-	use \AsciiHero\TraitBoundingBoxStandard;
+	use \AsciiHero\Traits\Dimensions;
+	use \AsciiHero\Traits\BoundingBoxStandard;
 	use \AsciiHero\Traits\UsePadding;
 
 	private $filler = '#';
